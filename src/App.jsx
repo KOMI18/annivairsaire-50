@@ -7,6 +7,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "firebase/firestore";
 import {db} from './firebase-config'
+const MUSIC_SRC = "/music.mp3";
 const MOCK_MSGS = [
   { id:1, name:"Sophie",  relation:"Sœur",          message:"50 ans et toujours aussi incroyable. Tellement fière de toi." },
   { id:2, name:"Marc",    relation:"Ami d'enfance",  message:"Trente ans d'amitié et pas une ride. Enfin, sur l'amitié." },
@@ -164,6 +165,90 @@ function Img({text,dark=true,portrait=false}){
       </div>
       {text}
     </div>
+  );
+}
+function useAudio(src){
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [ready,   setReady]   = useState(false);   // true dès que start() a été appelé
+
+  useEffect(()=>{
+    const a = new Audio(src);
+    a.loop = true;
+    a.volume = 0;
+    a.preload = "auto";
+    audioRef.current = a;
+    return()=>{ a.pause(); a.src=""; };
+  },[src]);
+
+  const fadeIn = useCallback(()=>{
+    const a=audioRef.current; if(!a)return;
+    a.volume=0;
+    a.play().catch(()=>{});
+    let v=0;
+    const t=setInterval(()=>{ v=Math.min(v+0.012,0.52); a.volume=v; if(v>=0.52)clearInterval(t); },55);
+  },[]);
+
+  const fadeOut = useCallback(()=>{
+    const a=audioRef.current; if(!a)return;
+    let v=a.volume;
+    const t=setInterval(()=>{ v=Math.max(v-0.022,0); a.volume=v; if(v<=0){clearInterval(t);a.pause();} },40);
+  },[]);
+
+  // Appelé une seule fois au premier scroll
+  const start = useCallback(()=>{
+    setReady(true);
+    setPlaying(true);
+    fadeIn();
+  },[fadeIn]);
+
+  const toggle = useCallback(()=>{
+    if(!ready){ start(); return; }
+    if(playing){ fadeOut(); setPlaying(false); }
+    else { fadeIn(); setPlaying(true); }
+  },[ready,playing,start,fadeIn,fadeOut]);
+
+  return { playing, ready, start, toggle };
+}
+function AudioBtn({ playing, ready, onToggle }){
+  const [hov,setHov]=useState(false);
+
+  return(
+    <button
+      className="audio-btn"
+      onClick={onToggle}
+      onMouseEnter={()=>setHov(true)}
+      onMouseLeave={()=>setHov(false)}
+      title={playing?"Couper la musique":"Remettre la musique"}
+      style={{
+        position:"fixed", bottom:"28px", right:"28px", zIndex:999,
+        width:"42px", height:"42px", borderRadius:"50%",
+        background: hov?"rgba(10,22,40,0.95)":"rgba(10,22,40,0.72)",
+        border:`1px solid ${hov?"rgba(255,255,255,0.45)":"rgba(255,255,255,0.18)"}`,
+        color:T.white, cursor:"pointer",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        backdropFilter:"blur(10px)",
+        transition:"background .25s, border-color .25s",
+        boxShadow:"0 4px 24px rgba(0,0,0,0.35)",
+      }}
+    >
+      {/* anneau animé quand la musique joue */}
+      {playing && <span className="audio-ripple"/>}
+
+      {playing ? (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+      ):(
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.7" strokeLinecap="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/>
+          <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      )}
+    </button>
   );
 }
 
@@ -434,6 +519,24 @@ function Voeux(){
 
 // ─── ROOT ─────────────────────────────────────────────────────────────────────
 export default function App(){
+  const audio = useAudio(MUSIC_SRC);
+
+  // Lance la musique au premier scroll
+  useEffect(()=>{
+    const handleScroll = () => {
+      if(!audio.ready){
+        audio.start();
+      }
+      // On garde l'écouteur actif pour que toggle fonctionne
+    };
+    // Une seule fois : dès le premier scroll, on démarre
+    const once = () => {
+      audio.start();
+      window.removeEventListener("scroll", once);
+    };
+    window.addEventListener("scroll", once, { passive:true });
+    return () => window.removeEventListener("scroll", once);
+  }, [audio]);  //
   useEffect(()=>{
     const s=document.createElement("style"); s.textContent=CSS; document.head.appendChild(s);
     return()=>document.head.removeChild(s);
@@ -441,6 +544,7 @@ export default function App(){
 
   return(
     <div style={{...sans,color:T.deep,background:T.white,overflowX:"hidden"}}>
+        {audio.ready && <AudioBtn playing={audio.playing} ready={audio.ready} onToggle={audio.toggle}/>}
       <Hero/>
       
       <Chap dark era="Les premières années · 1976 – 1986"
