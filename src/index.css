@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Petit fix pour un scroll fluide lors des transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-anniv-blue antialiased;
+}
