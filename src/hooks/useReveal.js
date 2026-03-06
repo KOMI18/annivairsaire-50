@@ -1,21 +1,19 @@
-import { useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
-export default function useReveal() {
+export function useReveal(thresh = 0.13) {
+  const ref = useRef(null);
+  const [on, setOn] = useState(false);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.12 }
+    const el = ref.current;
+    if (!el) return;
+    const ob = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setOn(true); ob.disconnect(); } },
+      { threshold: thresh }
     );
+    ob.observe(el);
+    return () => ob.disconnect();
+  }, [thresh]);
 
-    const elements = document.querySelectorAll(".reveal, .chapter");
-    elements.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
+  return [ref, on];
 }
