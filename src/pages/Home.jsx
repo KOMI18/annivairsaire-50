@@ -27,15 +27,15 @@ export default function Home() {
       <Hero />
 
       <Chapter dark
-        era="Les premières années · 1976 – 1985"
+        era="Les premières années"
         title={"L'enfance,\nlà où tout commence"}
-        desc="Quelques lignes ici pour raconter les premières années — l'endroit où il a grandi, ses premiers souvenirs, sa famille, ce qui le rendait unique dès le plus jeune âge."
+        desc="Tchuente bouffo Hubert ,  Né de Bouffo Pascal et de BOUTCHUENG Agnès Un 21 mars 1976 à Yaoundé"
          img="/photo-bebe.jpeg"
         gallery={GALLERIES.enfance}
       />
 
       <Chapter dark={false} rev
-        era="La jeunesse · 1985 – 1995"
+        era="La jeunesse "
         title={"Les années de\nconstruction"}
         desc="L'adolescence, les amis, les passions qui se dessinent. Ces années qui forgent le caractère et les convictions. Les premières grandes aventures de la vie."
         img="/jeune-6.jpeg"
