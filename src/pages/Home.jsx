@@ -45,7 +45,7 @@ export default function Home() {
       <Chapter dark
         era="L'amour · ~2000"
         title={"La rencontre\nqui a tout changé"}
-        desc="L'histoire d'une rencontre, d'un coup de cœur devenu une vie partagée. Quelques mots sur celle qui est aujourd'hui sa femme, sa complice, son roc."
+        desc="L'histoire d'une rencontre, d'un coup de cœur devenu une vie partagée.  Aujourd'hui sa femme, sa complice, son roc."
         img="/femme-0.jpeg"
         portrait
         gallery={GALLERIES.femme}
