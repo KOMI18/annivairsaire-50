@@ -25,7 +25,7 @@ export default function Footer() {
         onMouseEnter={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.6)"; e.currentTarget.style.color="#fff"; }}
         onMouseLeave={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.25)"; e.currentTarget.style.color="rgba(255,255,255,0.65)"; }}
       >
-        Voir tous les messages
+        Messages
       </Link>
       <p> Made with <span style={{color:"#ff69b4"}}>&hearts;</span> by <a href="https://komi.invity.site" style={{color:"#ff69b4"}}>Parfait Kom</a></p>
     </footer>

@@ -21,11 +21,11 @@ export const LIFE_PHOTOS = [
   { src: "/memorie-1/6.jpeg", alt: "Enfants qui grandissent",         ratio: "carre"    },
   { src: "/memorie-1/7.jpeg", alt: "Les yeux qui brillent",           ratio: "portrait" },
   { src: "/memorie-1/8.jpeg", alt: "Une accolade",                    ratio: "paysage"  },
-  { src: null, alt: "Le temps d'un repas",             ratio: "carre"    },
-  { src: null, alt: "Lumière d'été",                   ratio: "portrait" },
-  { src: null, alt: "Confidences entre amis",          ratio: "paysage"  },
-  { src: null, alt: "Les petits bonheurs",             ratio: "portrait" },
-  { src: null, alt: "Cinquante ans de vie",            ratio: "paysage"  },
+  { src: "memorie-1/9.jpeg", alt: "Le temps d'un repas",             ratio: "carre"    },
+  { src: "memorie-1/10.jpeg", alt: "Lumière d'été",                   ratio: "portrait" },
+  { src: "memorie-1/11.jpeg", alt: "Confidences entre amis",          ratio: "paysage"  },
+  { src: "memorie-1/12.jpeg", alt: "Les petits bonheurs",             ratio: "portrait" },
+  { src: "memorie-1/13.jpeg", alt: "Cinquante ans de vie",            ratio: "paysage"  },
 ];
 
 const RATIO_MAP = { portrait: "2/3", paysage: "4/3", carre: "1/1" };
