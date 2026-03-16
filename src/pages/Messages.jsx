@@ -28,10 +28,10 @@ export default function Messages() {
       setStatus("Veuillez renseigner votre prénom et votre message.");
       return;
     }
-    if (msg.length > 600) {
-      setStatus("Message trop long (600 car. max).");
-      return;
-    }
+    // if (msg.length > 600) {
+    //   setStatus("Message trop long (600 car. max).");
+    //   return;
+    // }
     try {
       setStatus("Envoi en cours…");
       await addDoc(collection(db, "voeux"), {
