@@ -17,7 +17,7 @@ export default function Today() {
           <Reveal delay="d1">
    
              
-            <img src='/now-1.jpeg' alt="..." style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+            <img src='/now-0.jpeg' alt="..." style={{width:"100%",height:"100%",objectFit:"cover"}}/>
           </Reveal>
           <Reveal delay="d2">
             <p style={{ ...serif, fontStyle:"italic", fontSize:"clamp(20px,3vw,34px)", fontWeight:300, lineHeight:1.65, color:T.pale }}>

@@ -7,7 +7,7 @@ import Today         from "../sections/Today";
 import Footer        from "../sections/Footer";
 import { GALLERIES } from "../data/galleries";
 import LifeGallery from "../sections/LifeGallery";
-
+import WorkSection from "../sections/WorkSection";
 const MUSIC_SRC = "/music.mp3";
 
 export default function Home() {
@@ -28,9 +28,9 @@ export default function Home() {
 
       <Chapter dark
         era="Les premières années"
-        title={"L'enfance,\nlà où tout commence"}
-        desc="Tchuente bouffo Hubert ,  Né de Bouffo Pascal et de BOUTCHUENG Agnès Un 21 mars 1976 à Yaoundé"
-         img="/photo-bebe.jpeg"
+        title={"L'enfance, là où tout commence"}
+        desc="Tchuente bouffo Hubert ,  Né de Bouffo Pascal et de BOUTCHUENG Agnès Un 21 mars 1976 à Yaoundé Dernier-né d'une fratrie de 8"
+         img="/parents.jpeg"
         gallery={GALLERIES.enfance}
       />
 
@@ -38,7 +38,7 @@ export default function Home() {
         era="La jeunesse "
         title={"Les années de\nconstruction"}
         desc="L'adolescence, les amis, les passions qui se dessinent. Ces années qui forgent le caractère et les convictions. Les premières grandes aventures de la vie."
-        img="/jeune-6.jpeg"
+        img="/jeune-1.jpeg"
         gallery={GALLERIES.jeunesse}
       />
 
@@ -60,6 +60,7 @@ export default function Home() {
       />
 
       <Today />
+      <WorkSection />
       <LifeGallery/>
       <Footer />
     </div>
